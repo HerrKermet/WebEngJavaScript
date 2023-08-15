@@ -1,41 +1,70 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-
-  <meta name="theme-color" content="#fafafa">
+  <title>Zahlenratespiel</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
-
 <body>
+  <div>
+    <p>Inbox</p>
+    <ul>
 
-  <!-- Add your site or application content here -->
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    </ul>
+  </div>
+  <div id="rnglink">
+    <a href="rng.html">RNG Game</a>
+  </div>
   <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
+    //function for highlighting
 
+    function highlightUnread(){
+
+      //get all list elements in an array
+      var listItems = document.querySelectorAll("li");
+
+      //iterate over list entries and highlight not seen messages
+      listItems.forEach(function(listItem){
+        if(listItem.dataset.flag != "seen"){
+          listItem.classList.add("highlight");
+        }
+      })
+    }
+
+
+    //array of objects which has subject and a read flag
+    var messages = [
+      {
+        "subject": "first message",
+        "flag": ""
+      },{
+        "subject": "second message",
+        "flag": ""
+      },{
+        "subject": "third message",
+        "flag": "seen"
+      },{
+        "subject": "spam message",
+        "flag": ""
+      },{
+        "subject": "another message",
+        "flag": "seen"
+      }
+    ];
+
+    //get the ul list of the inbox div
+    var list = document.querySelector("div ul");
+
+    //iterate over the messages array with an anonymous function which creates list entries for each thing
+    messages.forEach(function(message){
+      let listItem = document.createElement("li");
+      listItem.textContent = message.subject;
+      listItem.dataset.flag = message.flag;
+      list.appendChild(listItem);
+    })
+
+    highlightUnread();
+
+  </script>
+</body>
 </html>

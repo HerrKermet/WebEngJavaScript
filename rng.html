@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #555555">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body style="display: flex; justify-content: center; align-content: center">
+  <p>Guess the number (1 - 100)</p>
+  <input type="text" id="inputField">
+  <button id="rngButton">Guess</button>
+  <p id="triesLeft">10 tries left</p>
+  <div id="recent" style="display: flex">
+    <ul id="triesLower" style="color: lightcoral">
+      <li>< X</li>
+    </ul>
+    <ul id="triesHigher" style="color: cornflowerblue">
+      <li> > X</li>
+    </ul>
+  </div>
+  <script>
+    function checkInput(){
+      var inputField = document.querySelector("#inputField");
+      var guessNumber = inputField.value;
+
+      try {
+        if (isNaN(guessNumber) || (guessNumber < 1 || guessNumber > 100)) {
+          throw{
+            name: "NumberFormatException",
+            message: "Nur Zahlen zwischen 1 - 100 angeben"
+          };
+        }
+      }
+      catch(e)
+        {
+          alert(e.name + ": " + e.message);
+          return;
+        }
+
+      if(guessNumber == todaysNumber){
+        window.alert("You guess right");
+      }
+      else{
+        var listLower = document.querySelector("#triesLower");
+        var listHigher = document.querySelector("#triesHigher");
+
+        let item = document.createElement("li");
+        item.textContent = guessNumber;
+        if(guessNumber < todaysNumber){
+          listLower.appendChild(item);
+        }else{
+          listHigher.appendChild(item);
+        }
+
+        triesLeft--;
+        if(triesLeft <= 0){
+          window.alert("You could not guess the number." + " Todays number was " + todaysNumber);
+          return;
+        }
+        let text = document.querySelector("#triesLeft");
+        text.textContent = triesLeft + " tries left";
+      }
+
+    }
+
+    var todaysNumber = Math.ceil(Math.random() * 100);
+    var triesLeft = 10;
+
+    var button = document.querySelector("button");
+    button.addEventListener("click", checkInput);
+
+  </script>
+</body>
+</html>
